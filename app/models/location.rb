@@ -1,6 +1,8 @@
 class Location < ApplicationRecord
   # Direct associations
 
+  belongs_to :city
+
   has_many   :photos,
              :dependent => :destroy
 
