@@ -8,5 +8,8 @@ class Comment < ApplicationRecord
   # Indirect associations
 
   # Validations
+  validates :user_id, :presence => true
+  validates :location_id, :presence => true
+  validates :body, :presence => true
 
 end

@@ -38,5 +38,8 @@ class Location < ApplicationRecord
              :source => :user
 
   # Validations
-
+  validates :city_id, :presence => true
+  validates :category, :presence => true
+  validates :name, :presence => true, :uniqueness => {:scope => :city}
+  validates :address, :presence => true
 end

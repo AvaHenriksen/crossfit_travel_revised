@@ -4,6 +4,8 @@ class City < ApplicationRecord
   has_many   :locations,
              :dependent => :destroy
 
+  validates :name, :presence => true
+  validates :region, :presence => true, :uniqueness
   # Indirect associations
 
   # Validations
