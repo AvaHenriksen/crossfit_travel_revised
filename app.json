@@ -1,0 +1,1 @@
+{"name":"CrossFit Travel Revised","repository":"https://github.com/AvaHenriksen/crossfit_travel_revised","env":{"CLOUDINARY_CLOUD_NAME":{"required":true},"CLOUDINARY_API_KEY":{"required":true},"CLOUDINARY_API_SECRET":{"required":true},"ROLLBAR_ACCESS_TOKEN":{"required":true}}}
