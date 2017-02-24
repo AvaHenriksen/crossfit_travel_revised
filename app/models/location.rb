@@ -1,6 +1,9 @@
 class Location < ApplicationRecord
   # Direct associations
 
+  has_many   :photos,
+             :dependent => :destroy
+
   has_many   :comments,
              :dependent => :destroy
 
