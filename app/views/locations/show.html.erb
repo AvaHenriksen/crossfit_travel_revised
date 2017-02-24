@@ -19,7 +19,13 @@
       <dd><%= @location.details %></dd>
 
       <dt>City</dt>
-      <dd><%= @location.city_id %></dd>
+      <dd>
+        <% if @location.city.present? %>
+          <a href="/cities/<%= @location.city_id %>">
+            <%= @location.city.name %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Category</dt>
       <dd><%= @location.category %></dd>

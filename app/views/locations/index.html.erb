@@ -31,7 +31,13 @@
         <td><%= location.name %></td>
         <td><%= location.address %></td>
         <td><%= location.details %></td>
-        <td><%= location.city.name %></td>
+        <td>
+          <% if location.city.present? %>
+            <a href="/cities/<%= location.city.id %>">
+              <%= location.city.name %>
+            </a>
+          <% end %>
+        </td>
         <td><%= location.category %></td>
         <td>
           <a href="/locations/<%= location.id %>" class="btn btn-primary">Show</a>

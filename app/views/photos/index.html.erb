@@ -19,8 +19,20 @@
       <% @photos.each do |photo| %>
       <tr>
         <td><img src='<%= photo.image %>' class='img-responsive'></td>
-        <td><%= photo.location.name %></td>
-        <td><%= photo.user.email %></td>
+        <td>
+          <% if photo.location.present? %>
+            <a href="/locations/<%= photo.location.id %>">
+              <%= photo.location.name %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if photo.user.present? %>
+            <a href="/users/<%= photo.user.id %>">
+              <%= photo.user.email %>
+            </a>
+          <% end %>
+        </td>
         <td><%= photo.caption %></td>
         <td>
           <a href="/photos/<%= photo.id %>" class="btn btn-primary">Show</a>

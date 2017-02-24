@@ -9,10 +9,22 @@
       <dd><img src="<%= @photo.image %>" class="img-responsive"></dd>
 
       <dt>Location</dt>
-      <dd><%= @photo.location_id %></dd>
+      <dd>
+        <% if @photo.location.present? %>
+          <a href="/locations/<%= @photo.location_id %>">
+            <%= @photo.location.name %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>User</dt>
-      <dd><%= @photo.user_id %></dd>
+      <dd>
+        <% if @photo.user.present? %>
+          <a href="/users/<%= @photo.user_id %>">
+            <%= @photo.user.email %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Caption</dt>
       <dd><%= @photo.caption %></dd>
