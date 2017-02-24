@@ -6,6 +6,9 @@ class LocationsController < ApplicationController
   end
 
   def show
+    @photo = Photo.new
+    @comment = Comment.new
+    @bookmark = Bookmark.new
     @location = Location.find(params[:id])
 
     render("locations/show.html.erb")

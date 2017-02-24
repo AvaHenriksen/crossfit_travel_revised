@@ -6,6 +6,7 @@ class CitiesController < ApplicationController
   end
 
   def show
+    @location = Location.new
     @city = City.find(params[:id])
 
     render("cities/show.html.erb")
