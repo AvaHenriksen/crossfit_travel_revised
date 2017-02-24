@@ -14,6 +14,10 @@ class Location < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :visitors,
+             :through => :bookmarks,
+             :source => :user
+
   # Validations
 
 end

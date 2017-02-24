@@ -12,6 +12,10 @@ class User < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :bookmarked_locations,
+             :through => :bookmarks,
+             :source => :location
+
   # Validations
 
   # Include default devise modules. Others available are:
