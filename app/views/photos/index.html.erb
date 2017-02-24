@@ -19,7 +19,7 @@
       <% @photos.each do |photo| %>
       <tr>
         <td><%= photo.image %></td>
-        <td><%= photo.location_id %></td>
+        <td><%= photo.location.name %></td>
         <td><%= photo.user_id %></td>
         <td><%= photo.caption %></td>
         <td>
