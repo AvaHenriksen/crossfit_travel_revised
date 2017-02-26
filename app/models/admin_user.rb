@@ -4,7 +4,7 @@ class AdminUser < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
-         validates :email, :presence => true, :uniqueness
+         validates :email, :presence => true, :uniqueness => true
          validates :password, :presence => true
-         validates :username, :presence => true, :uniqueness 
+         validates :username, :presence => true, :uniqueness => true
 end

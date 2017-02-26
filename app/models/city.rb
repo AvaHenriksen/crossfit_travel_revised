@@ -5,7 +5,7 @@ class City < ApplicationRecord
              :dependent => :destroy
 
   validates :name, :presence => true
-  validates :region, :presence => true, :uniqueness
+  validates :region, :presence => true
   # Indirect associations
 
   # Validations
