@@ -12,6 +12,6 @@ class Photo < ApplicationRecord
   # Validations
   validates :user_id, :presence => true
   validates :location_id, :presence => true
-  validates :image, :presence => true, :uniqueness => true
+  validates :image, :presence => true
 
 end

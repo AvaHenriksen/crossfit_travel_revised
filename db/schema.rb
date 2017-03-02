@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224192316) do
+ActiveRecord::Schema.define(version: 20170301231341) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20170224192316) do
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "location_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -56,6 +55,7 @@ ActiveRecord::Schema.define(version: 20170224192316) do
     t.string   "region"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170224192316) do
     t.float    "address_latitude"
     t.float    "address_longitude"
     t.string   "address_formatted_address"
+    t.string   "website"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -103,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170224192316) do
     t.string   "username"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.boolean  "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

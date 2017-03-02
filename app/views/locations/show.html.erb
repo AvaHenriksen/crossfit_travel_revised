@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h3>Location #<%= @location.id %></h3>
+  <h3><%= @location.name %></h3>
 </div>
 
 <div class="row">
@@ -14,6 +14,9 @@
           <div id="location_map" style="height: 480px;"></div>
         </div>
       </dd>
+
+      <dt>Website</dt>
+      <dd><%= @location.website%> </dd>
 
       <dt>Details</dt>
       <dd><%= @location.details %></dd>
@@ -36,12 +39,15 @@
       <a href="/locations" class="btn btn-primary">
         Back
       </a>
+      <% if current_user.admin? == true %>
       <a href="/locations/<%= @location.id %>/edit" class="btn btn-warning">
         Edit
       </a>
       <a href="/delete_location/<%= @location.id %>" class="btn btn-danger" rel="nofollow">
         Delete
       </a>
+      <% else %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -51,28 +57,6 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Bookmarks
-      </li>
-
-      <% @location.bookmarks.each do |bookmark| %>
-        <li class="list-group-item">
-          <a href="/bookmarks/<%= bookmark.id %>">
-            <%= bookmark.location_id %>
-          </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/bookmarks/<%= bookmark.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/bookmarks/<%= bookmark.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_bookmark/<%= bookmark.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-        </li>
-      <% end %>
 
       <li class="list-group-item">
         <form action="/create_bookmark" method="post">
@@ -86,16 +70,10 @@
       <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <!-- Label and input for location_name -->
-      <div class="form-group">
-        <label for="location_name" class="control-label">
-          Location name
-        </label>
-
-        <input type="text" id="location_name" name="location_name" placeholder="Location name" class="form-control" value="">
-      </div>
+      <input type="hidden" name="name" value="<%= @location.name %>">
 
       <button class="btn btn-block btn-success">
-        Create Bookmark
+        Bookmark this location
       </button>
     </form>
       </li>
@@ -114,19 +92,23 @@
 
       <% @location.comments.each do |comment| %>
         <li class="list-group-item">
+          <p><%=comment.user.username%>:</p>
           <a href="/comments/<%= comment.id %>">
             <%= comment.body %>
           </a>
+          <small>
+            <%=time_ago_in_words(comment.created_at)%> ago
+            </small>
           <div class="btn-group btn-group-xs pull-right">
-            <a href="/comments/<%= comment.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
+              <% if current_user.id == comment.user_id %>
             <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
             <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
+            <%else%>
+            <% end %>
           </div>
         </li>
       <% end %>
@@ -147,15 +129,8 @@
 
       <!-- Label and input for location_id -->
       <input type="hidden" name="location_id" value="<%= @location.id %>">
-
       <!-- Label and input for user_id -->
-      <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email), :class => "form-control") %>
-      </div>
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <button class="btn btn-block btn-success">
         Create Comment
@@ -177,19 +152,23 @@
 
       <% @location.photos.each do |photo| %>
         <li class="list-group-item">
-          <a href="/photos/<%= photo.id %>">
-            <%= photo.created_at %>
-          </a>
+          <img src ="<%=photo.image%>" width="800px">
+          <div>
+            <%= photo.caption %>
+          </div>
           <div class="btn-group btn-group-xs pull-right">
             <a href="/photos/<%= photo.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
             </a>
+            <% if current_user.id == photo.user_id %>
             <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
             <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
+            <%else %>
+            <%end%>
           </div>
         </li>
       <% end %>
@@ -212,13 +191,7 @@
       <input type="hidden" name="location_id" value="<%= @location.id %>">
 
       <!-- Label and input for user_id -->
-      <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email), :class => "form-control") %>
-      </div>
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <!-- Label and input for caption -->
       <div class="form-group">
@@ -250,8 +223,9 @@
       <% @location.visitors.each do |user| %>
         <li class="list-group-item">
           <a href="/users/<%= user.id %>">
-            <%= user.email %>
+            <%= user.username %>
           </a>
+          <% if current_user.admin? == true %>
           <div class="btn-group btn-group-xs pull-right">
             <a href="/users/<%= user.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
@@ -263,6 +237,8 @@
               <i class="fa fa-trash-o"></i>
             </a>
           </div>
+          <% else %>
+          <% end %>
         </li>
       <% end %>
     </ul>

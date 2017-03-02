@@ -1,22 +1,5 @@
 class CommentsController < ApplicationController
-  def index
-    @q = Comment.ransack(params[:q])
-    @comments = @q.result(:distinct => true).includes(:user, :location).page(params[:page]).per(10)
 
-    render("comments/index.html.erb")
-  end
-
-  def show
-    @comment = Comment.find(params[:id])
-
-    render("comments/show.html.erb")
-  end
-
-  def new
-    @comment = Comment.new
-
-    render("comments/new.html.erb")
-  end
 
   def create
     @comment = Comment.new

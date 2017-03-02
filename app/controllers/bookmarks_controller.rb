@@ -16,24 +16,11 @@ class BookmarksController < ApplicationController
     render("bookmarks/index.html.erb")
   end
 
-  def show
-    @bookmark = Bookmark.find(params[:id])
-
-    render("bookmarks/show.html.erb")
-  end
-
-  def new
-    @bookmark = Bookmark.new
-
-    render("bookmarks/new.html.erb")
-  end
-
   def create
     @bookmark = Bookmark.new
 
     @bookmark.location_id = params[:location_id]
     @bookmark.user_id = params[:user_id]
-    @bookmark.location_name = params[:location_name]
 
     save_status = @bookmark.save
 
@@ -62,7 +49,6 @@ class BookmarksController < ApplicationController
 
     @bookmark.location_id = params[:location_id]
     @bookmark.user_id = params[:user_id]
-    @bookmark.location_name = params[:location_name]
 
     save_status = @bookmark.save
 
@@ -71,7 +57,7 @@ class BookmarksController < ApplicationController
 
       case referer
       when "/bookmarks/#{@bookmark.id}/edit", "/update_bookmark"
-        redirect_to("/bookmarks/#{@bookmark.id}", :notice => "Bookmark updated successfully.")
+        redirect_to("/bookmarks", :notice => "Bookmark updated successfully.")
       else
         redirect_back(:fallback_location => "/", :notice => "Bookmark updated successfully.")
       end

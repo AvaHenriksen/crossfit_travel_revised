@@ -1,15 +1,4 @@
 class LocationsController < ApplicationController
-  def index
-    @q = Location.ransack(params[:q])
-    @locations = @q.result(:distinct => true).includes(:bookmarks, :comments, :photos, :city, :visitors).page(params[:page]).per(10)
-    @location_hash = Gmaps4rails.build_markers(@locations.where.not(:address_latitude => nil)) do |location, marker|
-      marker.lat location.address_latitude
-      marker.lng location.address_longitude
-      marker.infowindow "<h5><a href='/locations/#{location.id}'>#{location.name}</a></h5><small>#{location.address_formatted_address}</small>"
-    end
-
-    render("locations/index.html.erb")
-  end
 
   def show
     @photo = Photo.new
@@ -31,6 +20,7 @@ class LocationsController < ApplicationController
 
     @location.name = params[:name]
     @location.address = params[:address]
+    @location.website = params[:website]
     @location.details = params[:details]
     @location.city_id = params[:city_id]
     @location.category = params[:category]
@@ -62,6 +52,7 @@ class LocationsController < ApplicationController
 
     @location.name = params[:name]
     @location.address = params[:address]
+    @location.website = params[:website]
     @location.details = params[:details]
     @location.city_id = params[:city_id]
     @location.category = params[:category]
@@ -87,10 +78,7 @@ class LocationsController < ApplicationController
 
     @location.destroy
 
-    if URI(request.referer).path == "/locations/#{@location.id}"
-      redirect_to("/", :notice => "Location deleted.")
-    else
-      redirect_back(:fallback_location => "/", :notice => "Location deleted.")
-    end
+    redirect_to("locations")
+
   end
 end

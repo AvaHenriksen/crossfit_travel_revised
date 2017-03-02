@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h3>City #<%= @city.id %></h3>
+  <h3><%= @city.name %></h3>
 </div>
 
 <div class="row">
@@ -7,7 +7,8 @@
     <dl class="dl-horizontal">
       <dt>Name</dt>
       <dd><%= @city.name %></dd>
-
+      <dt>State</dt>
+      <dd><%= @city.state %></dd>
       <dt>Region</dt>
       <dd><%= @city.region %></dd>
 
@@ -17,12 +18,15 @@
       <a href="/cities" class="btn btn-primary">
         Back
       </a>
+      <% if current_user.admin? == true %>
       <a href="/cities/<%= @city.id %>/edit" class="btn btn-warning">
         Edit
       </a>
       <a href="/delete_city/<%= @city.id %>" class="btn btn-danger" rel="nofollow">
         Delete
       </a>
+      <% else %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -31,30 +35,39 @@
 
 <div class="row">
   <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Locations
-      </li>
-
+  <table>
+        <tr>
+          <th>Location</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
       <% @city.locations.each do |location| %>
-        <li class="list-group-item">
+      <tr>
+          <td class= "col-sm-3">
           <a href="/locations/<%= location.id %>">
             <%= location.name %>
-          </a>
+          </a></td>
+          <td class = "col-sm-3"> <%=location.category %> </td>
+          <td class="col-sm-3">
           <div class="btn-group btn-group-xs pull-right">
             <a href="/locations/<%= location.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
             </a>
+            <% if current_user.admin? == true %>
             <a href="/locations/<%= location.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
             <a href="/delete_location/<%= location.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
+            <% else %>
+            <% end %>
           </div>
-        </li>
-      <% end %>
+        </td>
 
+        </tr>
+      <% end %>
+    </table>
       <li class="list-group-item">
         <form action="/create_location" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
@@ -78,6 +91,13 @@
         <input type="text" id="address" name="address" placeholder="Address" class="form-control" value="">
       </div>
 
+      <div class="form-group">
+        <label for="website" class="control-label">
+          Website
+        </label>
+
+        <input type="text" id="website" name="website" placeholder="Website" class="form-control" value="<%= @location.website %>">
+      </div>
       <!-- Label and input for details -->
       <div class="form-group">
         <label for="details" class="control-label">
@@ -96,7 +116,10 @@
           Category
         </label>
 
-        <input type="text" id="category" name="category" placeholder="Category" class="form-control" value="">
+        <select class = "form-control" name="category" id="category">
+          <option value="CrossFit Box">CrossFit Box</option>
+          <option value="Food Option">Food Option</option>
+          </select>
       </div>
 
       <button class="btn btn-block btn-success">

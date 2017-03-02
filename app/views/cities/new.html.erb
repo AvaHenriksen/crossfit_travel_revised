@@ -12,6 +12,7 @@
   <h3>Add City</h3>
 </div>
 
+<% if current_user.admin? == true %>
 <div class="row">
   <div class="col-md-12">
     <form action="/create_city" method="post">
@@ -24,7 +25,7 @@
           Name
         </label>
 
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @city.name %>">
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control">
       </div>
 
       <!-- Label and input for region -->
@@ -33,7 +34,15 @@
           Region
         </label>
 
-        <input type="text" id="region" name="region" placeholder="Region" class="form-control" value="<%= @city.region %>">
+        <input type="text" id="region" name="region" placeholder="Region" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="state" class="control-label">
+          State
+        </label>
+
+        <input type="text" id="state" name="state" placeholder="State" class="form-control">
       </div>
 
       <button class="btn btn-success">
@@ -44,3 +53,7 @@
     </form>
   </div>
 </div>
+
+<<% else %>
+<h2>Sorry, only admins can view this page. </h2>
+<% end %>

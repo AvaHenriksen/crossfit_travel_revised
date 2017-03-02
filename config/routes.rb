@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   post "/create_location", :controller => "locations", :action => "create"
 
   # READ
-  get "/locations", :controller => "locations", :action => "index"
   get "/locations/:id", :controller => "locations", :action => "show"
 
   # UPDATE
@@ -38,11 +37,9 @@ Rails.application.routes.draw do
 
   # Routes for the Photo resource:
   # CREATE
-  get "/photos/new", :controller => "photos", :action => "new"
   post "/create_photo", :controller => "photos", :action => "create"
 
   # READ
-  get "/photos", :controller => "photos", :action => "index"
   get "/photos/:id", :controller => "photos", :action => "show"
 
   # UPDATE
@@ -55,11 +52,9 @@ Rails.application.routes.draw do
 
   # Routes for the Comment resource:
   # CREATE
-  get "/comments/new", :controller => "comments", :action => "new"
   post "/create_comment", :controller => "comments", :action => "create"
 
   # READ
-  get "/comments", :controller => "comments", :action => "index"
   get "/comments/:id", :controller => "comments", :action => "show"
 
   # UPDATE
@@ -72,15 +67,12 @@ Rails.application.routes.draw do
 
   # Routes for the Bookmark resource:
   # CREATE
-  get "/bookmarks/new", :controller => "bookmarks", :action => "new"
   post "/create_bookmark", :controller => "bookmarks", :action => "create"
 
   # READ
   get "/bookmarks", :controller => "bookmarks", :action => "index"
-  get "/bookmarks/:id", :controller => "bookmarks", :action => "show"
 
   # UPDATE
-  get "/bookmarks/:id/edit", :controller => "bookmarks", :action => "edit"
   post "/update_bookmark/:id", :controller => "bookmarks", :action => "update"
 
   # DELETE

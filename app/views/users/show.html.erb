@@ -1,16 +1,12 @@
 <div class="page-header">
   <h3>User #<%= @user.id %></h3>
 </div>
-
+<% if current_user.admin? == true %>
 <div class="row">
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>Email</dt>
       <dd><%= @user.email %></dd>
-
-      <dt>Password</dt>
-      <dd><%= @user.password %></dd>
-
       <dt>Username</dt>
       <dd><%= @user.username %></dd>
 
@@ -21,39 +17,6 @@
         Back
       </a>
     </div>
-  </div>
-</div>
-
-<!-- A User has many bookmarks -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Bookmarks
-      </li>
-
-      <% @user.bookmarks.each do |bookmark| %>
-        <li class="list-group-item">
-          <a href="/bookmarks/<%= bookmark.id %>">
-            <%= bookmark.location_id %>
-          </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/bookmarks/<%= bookmark.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <%if current_user == bookmark.user %>
-              <a href="/bookmarks/<%= bookmark.id %>/edit" class="btn btn-warning">
-                <i class="fa fa-edit"></i>
-              </a>
-              <a href="/delete_bookmark/<%= bookmark.id %>" class="btn btn-danger" rel="nofollow">
-                <i class="fa fa-trash-o"></i>
-              </a>
-            <% end %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
   </div>
 </div>
 
@@ -153,3 +116,6 @@
     </ul>
   </div>
 </div>
+<<% else %>
+<h2>Sorry, only admins can view this page. </h2>
+<% end %>

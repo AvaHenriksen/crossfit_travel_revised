@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>CrossfitTravelRevised</title>
+  <title>CrossFit Travel Guide</title>
 
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -42,11 +42,10 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="/cities">Cities</a></li>
-          <li><a href="/locations">Locations</a></li>
-          <li><a href="/photos">Photos</a></li>
-          <li><a href="/comments">Comments</a></li>
-          <li><a href="/bookmarks">Bookmarks</a></li>
-          <li><a href="/users">Users</a></li>
+          <% if current_user !=nil %>
+          <li><a href="/bookmarks">My Bookmarks</a></li>
+          <% else %>
+          <%end%>
           <li><a href="/rails/info">Sitemap</a></li>
         </ul>
 
