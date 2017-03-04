@@ -34,7 +34,11 @@
       <dd><%= @location.category %></dd>
 
     </dl>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-group">
 
+          <li class="list-group-item">
     <div class="btn-group btn-group-justified">
       <a href="/locations" class="btn btn-primary">
         Back
@@ -50,6 +54,10 @@
       <% end %>
     </div>
   </div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 
 <!-- A Location has many bookmarks -->
@@ -151,26 +159,14 @@
       </li>
 
       <% @location.photos.each do |photo| %>
-        <li class="list-group-item">
-          <img src ="<%=photo.image%>" width="800px">
-          <div>
-            <%= photo.caption %>
-          </div>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/photos/<%= photo.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <% if current_user.id == photo.user_id %>
-            <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-            <%else %>
-            <%end%>
-          </div>
-        </li>
+      <li class="list-group-item">
+      <div>
+        <%= photo.caption %>
+      </div>
+      <div class "location_photo">
+          <a href = "/photos/<%=photo.id%>"> <img src ="<%=photo.image%>"> </a>
+      </div>
+      </li>
       <% end %>
 
       <li class="list-group-item">
@@ -203,7 +199,7 @@
       </div>
 
       <button class="btn btn-block btn-success">
-        Create Photo
+        Add a Photo
       </button>
     </form>
       </li>

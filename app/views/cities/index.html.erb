@@ -1,3 +1,29 @@
+<head>
+<style>
+.cities_hero {
+  background: url("http://crossfit110.com/wp-content/uploads/2017/01/OpenWorkout_Quintessential_0.jpg");
+  background-size: cover;
+  color: white;
+  height: 500px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+<div class = "cities_hero container-fluid">
+  <div class="col-sm-8">
+    <h1><strong>Welcome to CrossFit Travel Guide<strong></h1>
+  </div>
+  <div class= "col-sm-10 ">
+    <h2>
+         the one stop resource for athletes on the road
+    </h2>
+  </div>
+
+</div>
+
 <div class="page-header">
   <h1>
     Cities
@@ -6,7 +32,9 @@
       <% else %>
     <% end %>
   </h1>
-</div><div class="row mb-1">
+</div>
+
+<div class="row mb-1">
   <div class="col-md-12">
     <%= search_form_for @q, :class => collapse_search_form, :id => "cities_filters" do |f| %>
       <p class="lead">Narrow results:</p>
@@ -20,46 +48,6 @@
     <%= f.label :region_cont, "Region contains" %>
     <%= f.text_field :region_cont, :class => "form-control", :placeholder => "Region contains" %>
   </div>
-
-<div class="form-group">
-          <%= f.label :created_at, "Created at" %>
-          <div class="row">
-            <div class='col-md-6 mb-1'>
-              <div class='input-group date' id='created_atgteqPicker'>
-                  <%= f.text_field :created_at_gteq, :class => "form-control", :placeholder => "Created at greater than or equal to" %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-            </div>
-
-            <div class='col-md-6'>
-              <div class='input-group date' id='created_atlteqPicker'>
-                  <%= f.text_field :created_at_lteq, :class => "form-control", :placeholder => "Created at less than or equal to" %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-            </div>
-          </div>
-      </div>
-      <script type="text/javascript">
-          $(function () {
-              $('#created_atgteqPicker').datetimepicker({
-                  format: 'YYYY-MM-DD hh:mm:SS'
-              });
-              $('#created_atlteqPicker').datetimepicker({
-                  useCurrent: false,
-                  format: 'YYYY-MM-DD hh:mm:SS'
-              });
-              $('#created_atgteqPicker').on("dp.change", function (e) {
-                  $('#created_atlteqPicker').data("DateTimePicker").minDate(e.date);
-              });
-              $('#created_atlteqPicker').on("dp.change", function (e) {
-                  $('#created_atgteqPicker').data("DateTimePicker").maxDate(e.date);
-              });
-          });
-      </script>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
 
@@ -78,25 +66,19 @@
         <th>Name</th>
         <th>State</th>
         <th>Region</th>
-        <th>Actions</th>
+        <th class="pull-right">Number of locations</th>
       </tr>
 
       <% @cities.each do |city| %>
       <tr>
-        <td><%= city.name %></td>
+        <td><a href="/cities/<%= city.id %>"><%= city.name %></a></td>
         <td><%= city.state %></td>
         <td><%= city.region %></td>
-        <td>
-          <a href="/cities/<%= city.id %>" class="btn btn-primary">Show</a>
-          <% if current_user.admin? == true %>
-          <a href="/cities/<%= city.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_city/<%= city.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
-          <% else %>
-          <% end %>
-        </td>
+        <td class = "pull-right"><%= city.locations.count %></td>
       </tr>
       <% end %>
     </table>
     <%= paginate @cities, theme: 'twitter-bootstrap-4' %>
   </div>
 </div>
+</body>

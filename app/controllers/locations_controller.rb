@@ -78,7 +78,7 @@ class LocationsController < ApplicationController
 
     @location.destroy
 
-    redirect_to("locations")
+    redirect_to("locations", :notice => "Location deleted successfully.")
 
   end
 end
