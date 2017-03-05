@@ -27,7 +27,7 @@
     </dl>
 
     <div class="btn-group btn-group-justified">
-      <a href="/locations/<%=@photo.location.id%>" class="btn btn-primary">
+      <a href="/locations/<%=@photo.location.id%>" class="btn btn-default">
         Back
       </a>
       <% if current_user.id == @photo.user_id || current_user.admin? ==true %>

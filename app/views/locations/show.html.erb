@@ -40,7 +40,7 @@
           <dd><%= @location.category %></dd>
   </dl>
   <div class="btn-group btn-group-justified form-group">
-    <a href="/cities/<%=@location.city.id%>" class="btn btn-primary">
+    <a href="/cities/<%=@location.city.id%>" class="btn btn-default">
       Back
     </a>
     <% if current_user.admin? == true %>
@@ -66,7 +66,7 @@
 <!-- Label and input for location_name -->
 <input type="hidden" name="name" value="<%= @location.name %>">
 
-<button class="btn btn-block btn-default">
+<button class="btn btn-block btn-danger">
   Bookmark this location
 </button>
 </form>
