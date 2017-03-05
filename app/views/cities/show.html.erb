@@ -15,7 +15,7 @@
     </dl>
 
     <div class="btn-group btn-group-justified">
-      <a href="/cities" class="btn btn-primary">
+      <a href="/cities" class="btn btn-default">
         Back
       </a>
       <% if current_user.admin? == true %>
@@ -67,7 +67,7 @@
         </tr>
       <% end %>
     </table>
-      <h3>Add a new location</h3>
+      <h3>Add a new location to <%=@city.name%> </h3>
       <li class="list-group-item">
         <form action="/create_location" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
@@ -122,7 +122,7 @@
           </select>
       </div>
 
-      <button class="btn btn-block btn-success">
+      <button class="btn btn-block btn-danger">
         Create Location
       </button>
     </form>

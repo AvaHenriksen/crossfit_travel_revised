@@ -17,8 +17,8 @@
 
       <dt>Uploaded by</dt>
       <dd>
-            <%= @photo.user.username %>
-          </a>
+      <%= @photo.user.username %>
+      </a>
       </dd>
 
       <dt>Caption</dt>
@@ -30,7 +30,7 @@
       <a href="/locations/<%=@photo.location.id%>" class="btn btn-primary">
         Back
       </a>
-      <% if current_user.id == @photo.user_id %>
+      <% if current_user.id == @photo.user_id || current_user.admin? ==true %>
       <a href="/photos/<%= @photo.id %>/edit" class="btn btn-warning">
         Edit
       </a>

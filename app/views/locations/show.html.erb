@@ -1,114 +1,102 @@
+<head>
+<style>
+
+.locationphoto{
+  padding-bottom: 16px;
+  padding-top: 16px;
+}
+.comment_body{
+  padding-bottom: 16px;
+}
+
+</style>
+
+</head>
+<body>
 <div class="page-header">
   <h3><%= @location.name %></h3>
 </div>
 
-<div class="row">
-  <div class="col-md-12 mb-2">
-    <dl class="dl-horizontal">
-      <dt>Name</dt>
-      <dd><%= @location.name %></dd>
-
-      <dt>Address</dt>
-      <dd>
-        <div>
+<div class = "row">
+  <div class="col-md-10 col-md-offset-1">
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h3 class="panel-title">
+         Location information
+       </h3>
+     </div>
+      <div class="panel-body">
+      <dl class="dl-horizontal">
           <div id="location_map" style="height: 480px;"></div>
-        </div>
-      </dd>
-
-      <dt>Website</dt>
-      <dd><%= @location.website%> </dd>
-
-      <dt>Details</dt>
-      <dd><%= @location.details %></dd>
-
-      <dt>City</dt>
-      <dd>
-        <% if @location.city.present? %>
-          <a href="/cities/<%= @location.city_id %>">
-            <%= @location.city.name %>
-          </a>
-        <% end %>
-      </dd>
-
-      <dt>Category</dt>
-      <dd><%= @location.category %></dd>
-
-    </dl>
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="list-group">
-
-          <li class="list-group-item">
-    <div class="btn-group btn-group-justified">
-      <a href="/locations" class="btn btn-primary">
-        Back
-      </a>
-      <% if current_user.admin? == true %>
-      <a href="/locations/<%= @location.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_location/<%= @location.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
-      <% else %>
-      <% end %>
-    </div>
+          <dt>Name</dt>
+          <dd><%= @location.name %></dd>
+          <dt>Website</dt>
+          <dd><a href="<%=@location.website%>"><%= @location.website%></a> </dd>
+          <dt>Details</dt>
+          <dd><%= @location.details %></dd>
+          <dt>City</dt>
+          <dd><%= @location.city.name %></a></dd>
+          <dt>Category</dt>
+          <dd><%= @location.category %></dd>
+  </dl>
+  <div class="btn-group btn-group-justified form-group">
+    <a href="/cities/<%=@location.city.id%>" class="btn btn-primary">
+      Back
+    </a>
+    <% if current_user.admin? == true %>
+    <a href="/locations/<%= @location.id %>/edit" class="btn btn-warning">
+      Edit
+    </a>
+    <a href="/delete_location/<%= @location.id %>" class="btn btn-danger" rel="nofollow">
+      Delete
+    </a>
+    <% else %>
+    <% end %>
   </div>
-</div>
-</li>
-</ul>
-</div>
-</div>
+  <form action="/create_bookmark" method="post">
+<!-- Hidden input for authenticity token to protect from forgery -->
+<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-<!-- A Location has many bookmarks -->
+<!-- Label and input for location_id -->
+<input type="hidden" name="location_id" value="<%= @location.id %>">
 
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
+<!-- Label and input for user_id -->
+<input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-      <li class="list-group-item">
-        <form action="/create_bookmark" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+<!-- Label and input for location_name -->
+<input type="hidden" name="name" value="<%= @location.name %>">
 
-      <!-- Label and input for location_id -->
-      <input type="hidden" name="location_id" value="<%= @location.id %>">
+<button class="btn btn-block btn-default">
+  Bookmark this location
+</button>
+</form>
+</div> <!--panel body-->
 
-      <!-- Label and input for user_id -->
-      <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
-      <!-- Label and input for location_name -->
-      <input type="hidden" name="name" value="<%= @location.name %>">
-
-      <button class="btn btn-block btn-success">
-        Bookmark this location
-      </button>
-    </form>
-      </li>
-    </ul>
-  </div>
-</div>
+</div> <!--panel class-->
+</div> <!--column line -->
+</div> <!--row-->
 
 <!-- A Location has many comments -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Comments
-      </li>
-
+<div class = "row">
+  <div class="col-md-10 col-md-offset-1">
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h3 class="panel-title">
+          Share your experience at <%=@location.name%>
+       </h3>
+     </div>
+      <div class="panel-body">
       <% @location.comments.each do |comment| %>
-        <li class="list-group-item">
-          <p><%=comment.user.username%>:</p>
-          <a href="/comments/<%= comment.id %>">
+        <table>
+          <tr>
+          <p><%=comment.user.username%>:</p></tr>
+          <tr><div class= "comment_body">
             <%= comment.body %>
-          </a>
           <small>
             <%=time_ago_in_words(comment.created_at)%> ago
-            </small>
+          </small>
           <div class="btn-group btn-group-xs pull-right">
-              <% if current_user.id == comment.user_id %>
+              <% if current_user.id == comment.user_id || current_user.admin? ==true %>
             <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
@@ -118,10 +106,11 @@
             <%else%>
             <% end %>
           </div>
-        </li>
+        </div>
+      </tr>
       <% end %>
+    </table>
 
-      <li class="list-group-item">
         <form action="/create_comment" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -129,47 +118,44 @@
       <!-- Label and input for body -->
       <div class="form-group">
         <label for="body" class="control-label">
-          Body
+          Add a comment:
         </label>
 
-        <input type="text" id="body" name="body" placeholder="Body" class="form-control" value="">
+        <input type="text" id="body" name="body" placeholder="Body" class="form-control">
       </div>
-
       <!-- Label and input for location_id -->
       <input type="hidden" name="location_id" value="<%= @location.id %>">
       <!-- Label and input for user_id -->
       <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-      <button class="btn btn-block btn-success">
+      <button class="btn btn-block btn-default">
         Create Comment
       </button>
     </form>
-      </li>
-    </ul>
-  </div>
-</div>
+
+</div> <!--panel body-->
+</div> <!--panel class-->
+</div> <!--column line -->
+</div> <!--row-->
+
 
 <!-- A Location has many photos -->
 
 <div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Photos
-      </li>
-
+  <div class="col-md-10 col-md-offset-1">
+    <div class= "panel panel-default">
+      <div class = "panel-heading">
+        <h3 class = "panel-title"> Photos </h3>
+      </div>
+      <div class= "panel-body">
       <% @location.photos.each do |photo| %>
-      <li class="list-group-item">
+      <div class = "caption">
+        <strong><%= photo.caption %></strong>
+      </div>
       <div>
-        <%= photo.caption %>
+          <a href = "/photos/<%=photo.id%>"> <img src ="<%=photo.image%>" class= "locationphoto"> </a>
       </div>
-      <div class "location_photo">
-          <a href = "/photos/<%=photo.id%>"> <img src ="<%=photo.image%>"> </a>
-      </div>
-      </li>
       <% end %>
-
-      <li class="list-group-item">
         <form action="/create_photo" method="post" enctype="multipart/form-data">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -198,49 +184,38 @@
         <input type="text" id="caption" name="caption" placeholder="Caption" class="form-control" value="">
       </div>
 
-      <button class="btn btn-block btn-success">
+      <button class="btn btn-block btn-default">
         Add a Photo
       </button>
     </form>
-      </li>
-    </ul>
-  </div>
-</div>
 
+  </div> <!--panel body-->
+
+  </div> <!--panel class-->
+  </div> <!--column line -->
+  </div> <!--row-->
 <!-- A Location has many visitors -->
 
 <div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Visitors
-      </li>
+  <div class="col-md-10 col-md-offset-1">
+    <div class= "panel panel-default">
+      <div class = "panel-heading">
+        <h3 class = "panel-title">
+        Visitors </h3>
+      </div>
 
       <% @location.visitors.each do |user| %>
         <li class="list-group-item">
           <a href="/users/<%= user.id %>">
             <%= user.username %>
           </a>
-          <% if current_user.admin? == true %>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/users/<%= user.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/users/<%= user.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_user/<%= user.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-          <% else %>
-          <% end %>
         </li>
       <% end %>
-    </ul>
-  </div>
-</div>
+    </div> <!--panel body-->
 
+    </div> <!--panel class-->
+    </div> <!--column line -->
+    </div> <!--row-->
 
 <script src="//maps.google.com/maps/api/js?v=3.24&key=AIzaSyCOTPWiuvyyo6sKoIBzKA4-1ol-vTOIOlM"></script>
 <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
@@ -258,3 +233,4 @@
     handler.fitMapToBounds();
   });
 </script>
+</body>

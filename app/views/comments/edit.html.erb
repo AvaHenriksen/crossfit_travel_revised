@@ -45,11 +45,11 @@
         <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email, @comment.user_id), :class => "form-control") %>
       </div>
 
-      <button class="btn btn-warning">
+      <a href="/locations/<%=@comment.location_id%>" class="btn btn-warning">
         Update Comment
-      </button>
+      </a>
       or
-      <a href="/comments/<%= @comment.id %>">Cancel</a>
+      <a href="/locations/<%=@comment.location_id%>">Cancel</a>
     </form>
   </div>
 </div>
