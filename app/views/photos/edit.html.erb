@@ -1,3 +1,5 @@
+<div class="container">
+
 <!-- Validation failure messages -->
 <% if @photo.errors.any? %>
   <% @photo.errors.full_messages.each do |message| %>
@@ -62,4 +64,5 @@
       <a href="/photos/<%= @photo.id %>">Cancel</a>
     </form>
   </div>
+</div>
 </div>
