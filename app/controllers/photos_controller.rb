@@ -1,4 +1,10 @@
 class PhotosController < ApplicationController
+  def index
+    @q = Photo.ransack(params[:q])
+    @photos = @q.result(:distinct => true).includes(:user, :location).page(params[:page]).per(10)
+
+    render("photos/index.html.erb")
+  end
 
   def show
     @photo = Photo.find(params[:id])
@@ -19,7 +25,6 @@ class PhotosController < ApplicationController
     @photo.location_id = params[:location_id]
     @photo.user_id = params[:user_id]
     @photo.caption = params[:caption]
-
 
     save_status = @photo.save
 
