@@ -10,15 +10,20 @@
 
       <dt>Location</dt>
       <dd>
+        <% if @photo.location.present? %>
           <a href="/locations/<%= @photo.location_id %>">
             <%= @photo.location.name %>
           </a>
+        <% end %>
       </dd>
 
-      <dt>Uploaded by</dt>
+      <dt>User</dt>
       <dd>
-      <%= @photo.user.username %>
-      </a>
+        <% if @photo.user.present? %>
+          <a href="/users/<%= @photo.user_id %>">
+            <%= @photo.user.email %>
+          </a>
+        <% end %>
       </dd>
 
       <dt>Caption</dt>
@@ -27,18 +32,15 @@
     </dl>
 
     <div class="btn-group btn-group-justified">
-      <a href="/locations/<%=@photo.location.id%>" class="btn btn-default">
+      <a href="/photos" class="btn btn-primary">
         Back
       </a>
-      <% if current_user.id == @photo.user_id || current_user.admin? ==true %>
       <a href="/photos/<%= @photo.id %>/edit" class="btn btn-warning">
         Edit
       </a>
       <a href="/delete_photo/<%= @photo.id %>" class="btn btn-danger" rel="nofollow">
         Delete
       </a>
-      <% else %>
-      <% end %>
     </div>
   </div>
 </div>

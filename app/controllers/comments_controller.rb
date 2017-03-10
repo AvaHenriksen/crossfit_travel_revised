@@ -1,5 +1,22 @@
 class CommentsController < ApplicationController
+  def index
+    @q = Comment.ransack(params[:q])
+    @comments = @q.result(:distinct => true).includes(:user, :location).page(params[:page]).per(10)
 
+    render("comments/index.html.erb")
+  end
+
+  def show
+    @comment = Comment.find(params[:id])
+
+    render("comments/show.html.erb")
+  end
+
+  def new
+    @comment = Comment.new
+
+    render("comments/new.html.erb")
+  end
 
   def create
     @comment = Comment.new
@@ -39,7 +56,18 @@ class CommentsController < ApplicationController
 
     save_status = @comment.save
 
-    redirect_to("locations/#{@comment.location_id}.html.erb", :notice => "Comment updated")
+    if save_status == true
+      referer = URI(request.referer).path
+
+      case referer
+      when "/comments/#{@comment.id}/edit", "/update_comment"
+        redirect_to("/comments/#{@comment.id}", :notice => "Comment updated successfully.")
+      else
+        redirect_back(:fallback_location => "/", :notice => "Comment updated successfully.")
+      end
+    else
+      render("comments/edit.html.erb")
+    end
   end
 
   def destroy

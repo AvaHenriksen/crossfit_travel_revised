@@ -9,10 +9,9 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Edit <%= @location.name %></h3>
+  <h3>Edit Location #<%= @location.id %></h3>
 </div>
 
-<%if current_user.admin? == true%>
 <div class="row">
   <div class="col-md-12">
     <form action="/update_location/<%= @location.id %>" method="post">
@@ -35,14 +34,6 @@
         </label>
 
         <input type="text" id="address" name="address" placeholder="Address" class="form-control" value="<%= @location.address %>">
-      </div>
-
-      <div class="form-group">
-        <label for="website" class="control-label">
-          Website
-        </label>
-
-        <input type="text" id="website" name="website" placeholder="Website" class="form-control" value="<%= @location.website %>">
       </div>
 
       <!-- Label and input for details -->
@@ -69,10 +60,7 @@
           Category
         </label>
 
-        <select class = "form-control" name="category" id="category">
-          <option value="CrossFit Box">CrossFit Box</option>
-          <option value="Food Option">Food Option</option>
-          </select>
+        <input type="text" id="category" name="category" placeholder="Category" class="form-control" value="<%= @location.category %>">
       </div>
 
       <button class="btn btn-warning">
@@ -83,7 +71,3 @@
     </form>
   </div>
 </div>
-
-<% else %>
-<h2>Sorry, only admins can view this page. </h2>
-<% end %>

@@ -24,7 +24,6 @@ class CitiesController < ApplicationController
 
     @city.name = params[:name]
     @city.region = params[:region]
-    @city.state = params[:state]
 
     save_status = @city.save
 
@@ -53,7 +52,6 @@ class CitiesController < ApplicationController
 
     @city.name = params[:name]
     @city.region = params[:region]
-    @city.state = params[:state]
 
     save_status = @city.save
 
